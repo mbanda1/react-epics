@@ -1,0 +1,89 @@
+{"values": [
+      {
+        "id": 1,
+        "value": 1000,
+        "isExpense": false
+      },
+      {
+        "id": 2,
+        "value": 20,
+        "isExpense": true
+      },
+      {
+        "id": 3,
+        "value": 300,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 750,
+        "isExpense": true
+      },
+     
+      {
+        "id": 4,
+        "value": 750,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 850,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 850,
+        "isExpense": true
+      },
+
+      {
+        "id": 4,
+        "value": 950,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 950,
+        "isExpense": true
+      },{
+        "id": 4,
+        "value": 150,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 150,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 250,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 250,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 350,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 350,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 450,
+        "isExpense": true
+      },
+      {
+        "id": 4,
+        "value": 500,
+        "isExpense": true
+      }
+    ]
+  }
