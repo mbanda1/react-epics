@@ -10,15 +10,15 @@ const initialValues = {};
 
 const reducer = createReducer(initialValues, {
   [populate]: (state, action) => ({
-    data: action.payload,
+    data: action.payload?.data,
   }),
   [add]: (state, action) => ({
     ...state,
-    data: state.concat({ ...action.payload }),
+    data: [...state.data, action.payload],
   }),
   [remove]: (state, action) => ({
     ...state,
-    data: state.filter((entry) => entry.id !== action.payload.id),
+    data:  state.data.filter((entry) => entry.id !== action.payload)
   }),
   [updateEntry]: (state, action) => {
     const newEntries = [...state];

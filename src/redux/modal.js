@@ -7,10 +7,10 @@ const initialValues = {};
 
 const reducer = createReducer(initialValues, {
   [open]: (state, action) => ({
-    ...state,  isOpen:true, id: action.payload
+    ...state,  isOpen:true, entry: action.payload
   }),
-  [close]: (state, action) => ({
-    ...state,  isOpen:true, id: null
+  [close]: (state) => ({
+    ...state,  isOpen:false, entry: null
   })
 });
 
