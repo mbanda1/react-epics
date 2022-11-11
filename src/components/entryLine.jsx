@@ -19,12 +19,14 @@ function EntryLine({ id, description, value, isExpense = false }) {
               <Icon
                 name='edit'
                 bordered
-                onClick={() => dispatch({type: 'OPEN_EDIT_MODAL', payload: id })}
+                onClick={() => dispatch({type: 'OPEN_EDIT_MODAL', payload: {
+                  id, description, value, isExpense
+                } })}
               />
               <Icon
                 name='trash'
                 bordered
-                onClick={() => dispatch({type: 'REMOVE_ENTRY' })}
+                onClick={() => dispatch({type: 'REMOVE_ENTRY_RESULT', payload: id })}
               />
             </Grid.Column>
           </Grid.Row>
