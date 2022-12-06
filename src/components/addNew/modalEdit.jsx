@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'semantic-ui-react';
 import './style.css';
 import { useForm } from 'react-hook-form';
-// import useEntryDetails from '../hooks/useEntryDetails';
-// import EntryForm from './EntryForm';
+
 
 const validationSchema = yup.object({
   value: yup.number().typeError("Value is equired"),
@@ -15,8 +14,8 @@ const validationSchema = yup.object({
 
 function ModalEdit({ isOpen, description, value, id }) {
   useEffect(() => {
-    reset({ description, value })
-  }, [])
+    reset({ description, value, id })
+  }, [description, value])
 
   const defaultValues = {
     isOpen, description, value
@@ -26,15 +25,27 @@ function ModalEdit({ isOpen, description, value, id }) {
     resolver: yupResolver(validationSchema),
   });
 
-  const updateEntryRedux = () => { }
+  const updateEntryRedux = (payload) => {
+    dispatch({
+      type: 'UPDATE_ENTRY',
+      payload:{
+        description:payload.description,
+        value: payload.value,
+        id
+      }})
+      close()
+   }
+
+  const close = () => dispatch({type: 'CLOSE_EDIT_MODAL'})
 
   const dispatch = useDispatch();
-  //   const entryUpdate = useEntryDetails(description, value, isExpense);
+
   return (
     <Modal open={isOpen}>
       <Modal.Header>Edit entry</Modal.Header>
       <Modal.Content>
       <div>
+      {errors.description && <p>{errors.description?.message}</p>}
         <form onSubmit={handleSubmit(data => updateEntryRedux(data))}>
           <label for="fname">Value</label>
           <input type="number"
@@ -52,17 +63,14 @@ function ModalEdit({ isOpen, description, value, id }) {
             placeholder="Tea"
             defaultValue={defaultValues.description}
           />
-          {errors.description && <p>{errors.description?.message}</p>}
-          <br />
-          <input type="submit" />
         </form>
       </div>
      </Modal.Content>
 
       <Modal.Actions>
-        <Button onClick={() => dispatch({type: 'CLOSE_EDIT_MODAL'})}>Close</Button>
-        <Button onClick={() => {}} primary>
-          Ok
+        <Button onClick={() => close()}>Close</Button>
+        <Button onClick={handleSubmit(data => updateEntryRedux(data))} primary>
+          Update
         </Button>
       </Modal.Actions>
 

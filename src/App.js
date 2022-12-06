@@ -25,8 +25,8 @@ function App() {
       dispatch({ type:  'GET_ENTRIES' });
     }, [dispatch, updated]);
 
-    const data = entries?.data || []
-console.log({isOpen})
+    const data = entries?.data
+
   return (
     <Container>
 

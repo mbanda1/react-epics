@@ -1,12 +1,11 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer, current } from "@reduxjs/toolkit";
 
 const populate = createAction("POPULATE_ENTRIES");
 const add = createAction("ADD_ENTRY_RESULT");
 const remove = createAction("REMOVE_ENTRY_RESULT");
-const populateDetails = createAction("POPULATE_ENTRY_DETAILS");
 const updateEntry = createAction("UPDATE_ENTRY");
 
-const initialValues = {};
+const initialValues = [];
 
 const reducer = createReducer(initialValues, {
   [populate]: (state, action) => ({
@@ -21,12 +20,15 @@ const reducer = createReducer(initialValues, {
     data:  state.data.filter((entry) => entry.id !== action.payload)
   }),
   [updateEntry]: (state, action) => {
-    const newEntries = [...state];
-    const index = newEntries.findIndex(
+    const currentEntries = state.data;
+    const index = currentEntries.findIndex(
       (entry) => entry.id === action.payload.id
     );
-    newEntries[index] = { ...newEntries[index], ...action.payload.entry };
-    return { data: newEntries };
+    currentEntries[index] = { 
+      ...currentEntries[index], 
+      value: action.payload.value,
+      description: action.payload.description };
+    state.data = currentEntries
   },
 });
 
