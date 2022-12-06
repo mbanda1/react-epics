@@ -8,6 +8,7 @@ import { createRoot } from "react-dom/client";
 // Components
 import App from './App'
 import NewEntryForm from './components/addNew/newEntry';
+import Message from './components/message';
 
 import {
   createBrowserRouter,
@@ -42,6 +43,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <Provider store={store}>
+    <Message head={'Update'}/>
     <RouterProvider router={router}/>
   </Provider>
 )
