@@ -1,39 +1,57 @@
-import React, { Fragment } from 'react';
-import { Grid, Icon, Segment } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import React, { Fragment } from 'react'
+import { Grid, Icon, Segment } from 'semantic-ui-react'
+import { useDispatch } from 'react-redux'
+import * as PropTypes from 'prop-types'
 function EntryLine({ id, description, value, isExpense = false }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return (
     <Fragment>
       <Segment color={isExpense ? 'red' : 'green'}>
-        <Grid columns={3} textAlign='right'>
+        <Grid columns={3} textAlign="right">
           <Grid.Row>
-            <Grid.Column width={10} textAlign='left'>
+            <Grid.Column width={10} textAlign="left">
               {description}
             </Grid.Column>
-            <Grid.Column width={3} textAlign='right'>
+            <Grid.Column width={3} textAlign="right">
               {value}
             </Grid.Column>
             <Grid.Column width={3}>
               <Icon
-                name='edit'
+                name="edit"
                 bordered
-                onClick={() => dispatch({type: 'OPEN_EDIT_MODAL', payload: {
-                  id, description, value, isExpense
-                } })}
+                onClick={() =>
+                  dispatch({
+                    type: 'OPEN_EDIT_MODAL',
+                    payload: {
+                      id,
+                      description,
+                      value,
+                      isExpense,
+                    },
+                  })
+                }
               />
               <Icon
-                name='trash'
+                name="trash"
                 bordered
-                onClick={() => dispatch({type: 'REMOVE_ENTRY_RESULT', payload: id })}
+                onClick={() =>
+                  dispatch({ type: 'REMOVE_ENTRY_RESULT', payload: id })
+                }
               />
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Segment>
     </Fragment>
-  );
+  )
 }
 
-export default EntryLine;
+EntryLine.propTypes = {
+  id: PropTypes.string,
+  description: PropTypes.string,
+  value: PropTypes.number,
+  isExpense: PropTypes.string,
+}
+
+export default EntryLine

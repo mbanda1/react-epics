@@ -1,5 +1,5 @@
-import * as entriesSaga from './entries';
+import * as entriesSaga from './entries'
 
 export function initSagas(sagaMiddleware) {
-  Object.values(entriesSaga).forEach(sagaMiddleware.run.bind(sagaMiddleware));
+  Object.values(entriesSaga).forEach(sagaMiddleware.run.bind(sagaMiddleware))
 }

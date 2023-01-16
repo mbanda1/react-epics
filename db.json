@@ -1,64 +1,66 @@
-{"entries": [
-      {
-        "id": 1,
-        "value": 1000,
-        "isExpense": false,
-        "description": "Description"
-      },
-      {
-        "id": 2,
-        "value": 20,
-        "isExpense": true,
-        "description": "Description"
-      },
-      {
-        "id": 3,
-        "value": 300,
-        "isExpense": true,
-        "description": "Description"
-      },
-      {
-        "id": 4,
-        "value": 750,
-        "isExpense": false,
-        "description": "Description"
-      },
-     
-      {
-        "id": 5,
-        "value": 750,
-        "isExpense": false,
-        "description": "Description"
-      },
-      {
-        "id": 6,
-        "value": 850,
-        "isExpense": true,
-        "description": "Description"
-      },
-      {
-        "id": 7,
-        "value": 850,
-        "isExpense": true,
-        "description": "Description"
-      },
+{
+  "entries": [
+    {
+      "id": 1,
+      "value": 1000,
+      "isExpense": false,
+      "description": "Description"
+    },
+    {
+      "id": 2,
+      "value": 20,
+      "isExpense": true,
+      "description": "Description"
+    },
+    {
+      "id": 3,
+      "value": 300,
+      "isExpense": true,
+      "description": "Description"
+    },
+    {
+      "id": 4,
+      "value": 750,
+      "isExpense": false,
+      "description": "Description"
+    },
 
-      {
-        "id": 8,
-        "value": 950,
-        "isExpense": true,
-        "description": "Description"
-      },
-      {
-        "id": 9,
-        "value": 950,
-        "isExpense": true,
-        "description": "Description"
-      },{
-        "id": 10,
-        "value": 150,
-        "isExpense": true,
-        "description": "Description"
-      }
-    ]
-  }
+    {
+      "id": 5,
+      "value": 750,
+      "isExpense": false,
+      "description": "Description"
+    },
+    {
+      "id": 6,
+      "value": 850,
+      "isExpense": true,
+      "description": "Description"
+    },
+    {
+      "id": 7,
+      "value": 850,
+      "isExpense": true,
+      "description": "Description"
+    },
+
+    {
+      "id": 8,
+      "value": 950,
+      "isExpense": true,
+      "description": "Description"
+    },
+    {
+      "id": 9,
+      "value": 950,
+      "isExpense": true,
+      "description": "Description"
+    },
+    {
+      "id": 10,
+      "value": 150,
+      "isExpense": true,
+      "description": "Description"
+    }
+  ]
+}

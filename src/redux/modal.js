@@ -1,17 +1,21 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAction, createReducer } from '@reduxjs/toolkit'
 
-const open = createAction("OPEN_EDIT_MODAL");
-const close = createAction("CLOSE_EDIT_MODAL");
+const open = createAction('OPEN_EDIT_MODAL')
+const close = createAction('CLOSE_EDIT_MODAL')
 
-const initialValues = {};
+const initialValues = {}
 
 const reducer = createReducer(initialValues, {
   [open]: (state, action) => ({
-    ...state,  isOpen:true, entry: action.payload
+    ...state,
+    isOpen: true,
+    entry: action.payload,
   }),
   [close]: (state) => ({
-    ...state,  isOpen:false, entry: null
-  })
-});
+    ...state,
+    isOpen: false,
+    entry: null,
+  }),
+})
 
-export default reducer;
+export default reducer

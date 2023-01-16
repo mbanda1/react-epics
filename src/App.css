@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.toast {
+  padding: 1rem;
+  width: 100%;
+  z-index: 99999;
+  position: fixed;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  top: 5rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  align-items: center;
+}

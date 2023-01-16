@@ -1,30 +1,27 @@
-import React from 'react';
+import React from 'react'
 import * as PropTypes from 'prop-types'
-const { Message } = require("semantic-ui-react")
+const { Message } = require('semantic-ui-react')
 
-const Msg = ({head}) => {
-  const [visible, setVisible] = React.useState(true);
+const Msg = () => {
+  const [visible, setVisible] = React.useState(true)
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-        setVisible(false)
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
+      setVisible(false)
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [])
 
-    return (
-        visible && <Message positive>
-            {head} Successfuly.
-        </Message>
-    )
+  return visible && <Message positive>Successfuly.</Message>
 }
 
 Msg.defaultProps = {
-    head: null
+  head: null,
 }
 
 Msg.propTypes = {
-    head: PropTypes.string.isRequired
+  head: PropTypes.string.isRequired,
 }
 
+React.memo(Msg)
 export default Msg
