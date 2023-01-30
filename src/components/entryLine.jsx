@@ -1,10 +1,18 @@
 import React, { Fragment } from 'react'
 import { Grid, Icon, Segment } from 'semantic-ui-react'
-import { useDispatch } from 'react-redux'
 import * as PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-function EntryLine({ id, description, value, isExpense = false }) {
-  const dispatch = useDispatch()
+import { useQuery } from 'react-query'
+function EntryLine({ id, description, isExpense = false }) {
+  const removeEntryById = useQuery(
+    ['GET_ENTRIES'],
+    () => {
+      // action to remove
+    },
+    {
+      onSuccess: () => {},
+    },
+  )
 
   return (
     <Fragment>
@@ -21,13 +29,7 @@ function EntryLine({ id, description, value, isExpense = false }) {
               <Link to={`/${id}`}>
                 <Icon name="edit" bordered />
               </Link>
-              <Icon
-                name="trash"
-                bordered
-                onClick={() =>
-                  dispatch({ type: 'REMOVE_ENTRY_RESULT', payload: id })
-                }
-              />
+              <Icon name="trash" bordered onClick={() => removeEntryById()} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
