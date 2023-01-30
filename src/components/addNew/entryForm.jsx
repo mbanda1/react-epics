@@ -10,7 +10,7 @@ const validationSchema = yup.object({
   description: yup.string().required('Required'),
 })
 
-export default function App({ addEntryRedux }) {
+export default function App({ addEntry, isLoading }) {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ export default function App({ addEntryRedux }) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => addEntryRedux(data))}>
+      <form onSubmit={handleSubmit((data) => addEntry(data))}>
         <label htmlFor="fname">Value</label>
         <input type="number" {...register('value')} placeholder="999" />
         {errors.value && <p>{errors.value?.message}</p>}
@@ -31,12 +31,12 @@ export default function App({ addEntryRedux }) {
         <input type="text" {...register('description')} placeholder="Tea" />
         {errors.description && <p>{errors.description?.message}</p>}
         <br />
-        <input type="submit" />
+        <input type="submit" value={isLoading ? 'Loading...' : 'submit'} />
       </form>
     </div>
   )
 }
 
 App.propTypes = {
-  addEntryRedux: PropTypes.func,
+  addEntry: PropTypes.func,
 }

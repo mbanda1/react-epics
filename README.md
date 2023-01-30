@@ -1,10 +1,12 @@
 # **React Epic**
 
-> Developing react Web App the way i like with technolgies that aim at providing better scalabality, lightness, security etc.
+<h1> v ~ 0.1 </h1>
 
-# State Managment
+> Developing react Web App like ME, with techs that aim at providing better scalabality, lightness, security etc.
 
-- Redux tool-kit - Embrassing immutable state prodivided by react immer.
+# React Redux
+- For centrolized state managment while maintaining good developer expirience when things get complex.
+- Applying Redux tool-kit - Embrassing immutable state prodivided by react immer.
 
 # Redux-saga
 
@@ -44,3 +46,5 @@
 # Code consistency
 
 - ESLint, Prettier and Husky
+
+

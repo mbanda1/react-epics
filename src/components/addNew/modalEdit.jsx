@@ -1,34 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import * as PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import { Button, Modal } from 'semantic-ui-react'
 import './style.css'
 import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
+import { QueryCache, useMutation, useQuery } from 'react-query'
+import axios from 'axios'
 
 const validationSchema = yup.object({
   value: yup.number().typeError('Value is equired'),
   description: yup.string().required('Required'),
 })
+function ModalEdit() {
+  const navigate = useNavigate()
+  const { postId } = useParams()
 
-function ModalEdit({
-  isOpen,
-  description,
-  value,
-  id,
-  setNotification,
-  setUpdated,
-}) {
-  useEffect(() => {
-    reset({ description, value, id })
-  }, [description, value])
+  const { data } = useQuery(
+    ['GET_ENTRY', { postId }],
+    () => axios.get(`http://localhost:3001/entries/${postId}`),
+    {
+      onSuccess: ({ description, value, id }) => {
+        reset({ description, value, id })
+      },
+    },
+  )
 
-  const defaultValues = {
-    isOpen,
-    description,
-    value,
-  }
+  const defaultValues = { ...data?.data }
 
   const {
     register,
@@ -39,31 +37,31 @@ function ModalEdit({
     resolver: yupResolver(validationSchema),
   })
 
-  const updateEntryRedux = (payload) => {
-    dispatch({
-      type: 'UPDATE_ENTRY',
-      payload: {
-        description: payload.description,
-        value: payload.value,
-        id,
-      },
-    })
-    setNotification(new Date())
-    close()
-    setUpdated(new Date())
-  }
-
-  const close = () => dispatch({ type: 'CLOSE_EDIT_MODAL' })
-
-  const dispatch = useDispatch()
+  const updateEntryRedux = useMutation({
+    mutationFn: (values) =>
+      axios.post(`/`, {
+        value: values.value,
+        description: values.description,
+      }),
+    onSuccess: (data, values) => {
+      QueryCache.setQueryData(['GET_ENTRY', postId], data) // Not necessary
+      QueryCache.invalidateQueries(['GET_ENTRY', postId]) // Not necessary
+    },
+    onError: (error) => {
+      window.alert(error.response.data)
+    },
+    onSettled: () => navigate('/'),
+  })
 
   return (
-    <Modal open={isOpen}>
+    <Modal open={true}>
       <Modal.Header>Edit entry</Modal.Header>
       <Modal.Content>
         <div>
           {errors.description && <p>{errors.description?.message}</p>}
-          <form onSubmit={handleSubmit((data) => updateEntryRedux(data))}>
+          <form
+            onSubmit={handleSubmit((data) => updateEntryRedux.mutate(data))}
+          >
             <label htmlFor="fname">Value</label>
             <input
               type="number"
@@ -86,9 +84,9 @@ function ModalEdit({
       </Modal.Content>
 
       <Modal.Actions>
-        <Button onClick={() => close()}>Close</Button>
+        <Button onClick={() => navigate('/')}>Close</Button>
         <Button
-          onClick={handleSubmit((data) => updateEntryRedux(data))}
+          onClick={handleSubmit((data) => updateEntryRedux.mutate(data))}
           primary
         >
           Update
@@ -98,18 +96,8 @@ function ModalEdit({
   )
 }
 
-ModalEdit.defaultProps = {
-  isOpen: false,
-  description: '',
-}
+ModalEdit.defaultProps = {}
 
-ModalEdit.propTypes = {
-  isOpen: PropTypes.bool,
-  description: PropTypes.string,
-  value: PropTypes.number,
-  id: PropTypes.string,
-  setNotification: PropTypes.func,
-  setUpdated: PropTypes.func,
-}
+ModalEdit.propTypes = {}
 
 export default ModalEdit

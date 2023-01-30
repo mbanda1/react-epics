@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { Grid, Icon, Segment } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
 import * as PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 function EntryLine({ id, description, value, isExpense = false }) {
   const dispatch = useDispatch()
 
@@ -14,24 +15,12 @@ function EntryLine({ id, description, value, isExpense = false }) {
               {description}
             </Grid.Column>
             <Grid.Column width={3} textAlign="right">
-              {value}
+              {id}
             </Grid.Column>
             <Grid.Column width={3}>
-              <Icon
-                name="edit"
-                bordered
-                onClick={() =>
-                  dispatch({
-                    type: 'OPEN_EDIT_MODAL',
-                    payload: {
-                      id,
-                      description,
-                      value,
-                      isExpense,
-                    },
-                  })
-                }
-              />
+              <Link to={`/${id}`}>
+                <Icon name="edit" bordered />
+              </Link>
               <Icon
                 name="trash"
                 bordered
