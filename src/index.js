@@ -2,13 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import 'semantic-ui-css/semantic.min.css'
 import './index.css'
-import { store } from './store'
-import { Provider } from 'react-redux'
 // Components
 import App from './App'
 import NewEntryForm from './components/addNew/newEntry'
 import { QueryClient, QueryClientProvider } from 'react-query'
-
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ModalEdit from './components/addNew/modalEdit'
 
@@ -42,9 +40,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 const queryClient = new QueryClient()
 
 root.render(
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+    <ReactQueryDevtools />
+  </QueryClientProvider>,
 )
