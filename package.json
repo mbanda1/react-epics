@@ -30,7 +30,7 @@
     "eject": "react-scripts eject",
     "backend": "npx json-server --watch db.json --port 3001",
     "start:all": "concurrently \"npm start\" \"npm backend\"",
-    "style": "prettier --write .",
+    "style": "prettier --ignore-path .gitignore --write .",
     "lint": "eslint --fix --quiet .",
     "execute-husky": "npx husky install && npx husky add .husky/pre-commit \"npx --no-install lint-staged\""
   },
