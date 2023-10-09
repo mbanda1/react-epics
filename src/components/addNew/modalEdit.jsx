@@ -39,7 +39,7 @@ function ModalEdit() {
 
   const updateEntryRedux = useMutation({
     mutationFn: (values) =>
-      axios.post(`/`, {
+      axios.post('/', {
         value: values.value,
         description: values.description,
       }),

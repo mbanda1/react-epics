@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PropTypes from 'prop-types'
-const { Message } = require('semantic-ui-react')
+import { Message } from 'semantic-ui-react'
 
 const Msg = () => {
   const [visible, setVisible] = React.useState(true)

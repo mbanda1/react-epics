@@ -7,7 +7,7 @@ import App from './App'
 import NewEntryForm from './components/addNew/newEntry'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 import ModalEdit from './components/addNew/modalEdit'
 
 const theRoutes = [
@@ -21,18 +21,22 @@ const theRoutes = [
   },
 ]
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-  },
-  ...theRoutes.map((x) => {
-    return {
-      path: x.path,
-      element: x.element,
-    }
-  }),
-])
+const TheRoutesDefination = () => {
+  const routeElement = useRoutes([
+    {
+      path: '/',
+      element: <App/>,
+    },
+    ...theRoutes.map((x) => {
+      return {
+        path: x.path,
+        element: x.element,
+      }
+    }),
+  ])
+
+  return routeElement
+}
 
 // As of React 18
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -41,7 +45,9 @@ const queryClient = new QueryClient()
 
 root.render(
   <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
+    <Router>
+      <TheRoutesDefination/>
+    </Router>
     <ReactQueryDevtools />
   </QueryClientProvider>,
 )

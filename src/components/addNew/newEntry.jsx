@@ -12,7 +12,7 @@ function NewEntryForm() {
 
   const addComment = useMutation({
     mutationFn: (values) =>
-      axios.post(`/`, {
+      axios.post('/', {
         id: uuidv4(),
         value: values.value,
         description: values.description,
@@ -29,7 +29,7 @@ function NewEntryForm() {
 
   const addComment_Two = useMutation(
     (values) =>
-      axios.post(`/`, {
+      axios.post('/', {
         value: values.value,
         description: values.description,
       }),
