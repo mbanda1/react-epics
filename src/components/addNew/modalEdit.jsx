@@ -5,8 +5,8 @@ import { Button, Modal } from 'semantic-ui-react'
 import './style.css'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
-import { QueryCache, useMutation, useQuery } from 'react-query'
 import axios from 'axios'
+import { useQuery, useMutation, QueryCache } from '@tanstack/react-query'
 
 const validationSchema = yup.object({
   value: yup.number().typeError('Value is equired'),
@@ -16,15 +16,13 @@ function ModalEdit() {
   const navigate = useNavigate()
   const { postId } = useParams()
 
-  const { data } = useQuery(
-    ['GET_ENTRY', { postId }],
-    () => axios.get(`http://localhost:3001/entries/${postId}`),
-    {
-      onSuccess: ({ description, value, id }) => {
-        reset({ description, value, id })
-      },
-    },
-  )
+  const { data } = useQuery({
+    queryKey: ['GET_ENTRY', { postId }],
+    queryFn: () => axios.get(`http://localhost:3001/entries/${postId}`),
+    onSuccess: ({ description, value, id }) => {
+      reset({ description, value, id })
+    }
+  })
 
   const defaultValues = { ...data?.data }
 
@@ -43,7 +41,7 @@ function ModalEdit() {
         value: values.value,
         description: values.description,
       }),
-    onSuccess: (data, values) => {
+    onSuccess: (data) => {
       QueryCache.setQueryData(['GET_ENTRY', postId], data) // Not necessary
       QueryCache.invalidateQueries(['GET_ENTRY', postId]) // Not necessary
     },

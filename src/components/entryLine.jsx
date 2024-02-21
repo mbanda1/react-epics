@@ -2,17 +2,14 @@ import React, { Fragment } from 'react'
 import { Grid, Icon, Segment } from 'semantic-ui-react'
 import * as PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 function EntryLine({ id, description, isExpense = false }) {
-  const removeEntryById = useQuery(
-    ['GET_ENTRIES'],
-    () => {
+  const removeEntryById = useQuery({
+    queryKey: ['GET_ENTRIES'],
+    queryFn:     () => {
       // action to remove
-    },
-    {
-      onSuccess: () => {},
-    },
-  )
+    }
+  })
 
   return (
     <Fragment>

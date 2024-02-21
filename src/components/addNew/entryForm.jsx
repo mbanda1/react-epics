@@ -39,4 +39,5 @@ export default function App({ addEntry, isLoading }) {
 
 App.propTypes = {
   addEntry: PropTypes.func,
+  isLoading: PropTypes.bool
 }
