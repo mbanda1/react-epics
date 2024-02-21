@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom/client'
 import 'semantic-ui-css/semantic.min.css'
 import './index.css'
 // Components
-import App from './App'
-import NewEntryForm from './components/addNew/newEntry'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import App from './App.tsx'
+import NewEntryForm from './components/addNew/newEntry.jsx'
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
-import ModalEdit from './components/addNew/modalEdit'
+import ModalEdit from './components/addNew/modalEdit.jsx'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+
 
 const theRoutes = [
   {
