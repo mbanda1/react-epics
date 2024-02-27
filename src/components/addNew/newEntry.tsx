@@ -1,17 +1,25 @@
 import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
-import EntryForm from './entryForm'
+import EntryForm from './entryForm.tsx'
 import { v4 as uuidv4 } from 'uuid'
-import MainHeader from '../header'
+import MainHeader from '../header.tsx'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { QueryCache, useMutation, } from '@tanstack/react-query'
+import { QueryCache, useMutation, useQueryClient, } from '@tanstack/react-query'
 
-function NewEntryForm() {
+type formInput = {
+  id: string;
+  value: number;
+  description: string;
+  notification?: string;
+}
+
+const NewEntryForm = () => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const addComment = useMutation({
-    mutationFn: (values) =>
+  const {isPending} = useMutation({
+    mutationFn: (values: formInput) =>
       axios.post('/', {
         id: uuidv4(),
         value: values.value,
@@ -19,16 +27,16 @@ function NewEntryForm() {
         notification: 'Inserted',
       }),
     onSuccess: () => {
-      QueryCache.invalidateQueries('GET_ENTRIES') // Not necessary
+      queryClient.invalidateQueries({ queryKey: ['GET_ENTRIES'] }) // Not necessary
     },
-    onError: (error) => {
+    onError: (error: { response: { data: string } }) => {
       window.alert(error.response.data)
     },
     onSettled: () => navigate('/'),
   })
 
   const addComment_Two = useMutation({
-    mutationFn: (values) =>
+    mutationFn: (values: {value:string, description: string}) =>
       axios.post('/', {
         value: values.value,
         description: values.description,
@@ -36,7 +44,7 @@ function NewEntryForm() {
     onSettled: () => navigate('/'),
     onMutate: (values) => {
       // Runs optimistc update,the data is added immidiattley to the list without waiting for the serve
-      QueryCache.setQueryData('GET_ENTRIES', (oldEntries) => {
+      queryClient.setQueryData(['GET_ENTRIES'], (oldEntries:formInput) => {
         return [
           ...oldEntries,
           {
@@ -48,19 +56,18 @@ function NewEntryForm() {
     },
   })
 
-  const { isInitialLoading } = addComment
 
   return (
     <>
       <MainHeader title="Add new transaction" type="h3" />
       <EntryForm
         addEntry={(x) => addComment_Two.mutate(x)}
-        isLoading={isInitialLoading}
+        isLoading={isPending}
       />
 
       <Button icon labelPosition="left" onClick={() => navigate('/')}>
         Back
-        <Icon name="left arrow" />
+        <Icon name="arrow left" />
       </Button>
     </>
   )

@@ -4,14 +4,13 @@ import 'semantic-ui-css/semantic.min.css'
 import './index.css'
 // Components
 import App from './App.tsx'
-import NewEntryForm from './components/addNew/newEntry.jsx'
+import NewEntryForm from './components/addNew/newEntry.tsx'
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
-import ModalEdit from './components/addNew/modalEdit.jsx'
+import ModalEdit from './components/addNew/modalEdit.tsx'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
 

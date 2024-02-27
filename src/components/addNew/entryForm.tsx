@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import * as PropTypes from 'prop-types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import './style.css'
 
@@ -10,18 +9,29 @@ const validationSchema = yup.object({
   description: yup.string().required('Required'),
 })
 
-export default function App({ addEntry, isLoading }) {
-  const {
+type entryFormProps = {
+  isLoading: boolean,
+  addEntry: any,
+  // addEntry: React.ChangeEventHandler<HTMLElement>,
+}
+
+interface formInput {
+  value: number;
+  description: string;
+}
+
+export default ({addEntry, isLoading=false}: entryFormProps) => {
+
+    const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-  })
+  } = useForm<formInput>({ resolver: yupResolver(validationSchema) });
+
 
   return (
     <div>
-      <form onSubmit={handleSubmit((data) => addEntry(data))}>
+      <form onSubmit={handleSubmit((data: formInput) => addEntry(data))}>
         <label htmlFor="fname">Value</label>
         <input type="number" {...register('value')} placeholder="999" />
         {errors.value && <p>{errors.value?.message}</p>}
@@ -35,9 +45,4 @@ export default function App({ addEntry, isLoading }) {
       </form>
     </div>
   )
-}
-
-App.propTypes = {
-  addEntry: PropTypes.func,
-  isLoading: PropTypes.bool
 }

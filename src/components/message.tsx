@@ -12,7 +12,7 @@ const Msg = () => {
     return () => clearTimeout(timer)
   }, [])
 
-  return visible && <Message positive>Successfuly.</Message>
+  return visible && <Message positive>Successfully.</Message>
 }
 
 Msg.defaultProps = {

@@ -1,25 +1,21 @@
 import React from 'react'
-import * as PropTypes from 'prop-types'
 import { Statistic } from 'semantic-ui-react'
 
-function DisplayBalance({ title, value, color = 'black', size = 'tiny' }) {
+interface BalanceTypes {
+  title: string,
+  value: number,
+  color?: any,
+  size?: 'mini' | 'tiny' | 'small' | 'large' | 'huge',
+}
+
+const DisplayBalance: React.FC<BalanceTypes> = ({ title, value = 0, color = 'black', size = 'tiny' }) => {
+
   return (
     <Statistic size={size} color={color}>
       <Statistic.Label style={{ texAlign: 'left' }}>{title}</Statistic.Label>
       <Statistic.Value>{isNaN(value) ? 0 : value}</Statistic.Value>
     </Statistic>
   )
-}
-
-DisplayBalance.defaultProps = {
-  value: 0,
-}
-
-DisplayBalance.propTypes = {
-  title: PropTypes.string,
-  value: PropTypes.number,
-  color: PropTypes.string,
-  size: PropTypes.string,
 }
 
 export default DisplayBalance

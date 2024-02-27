@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Container } from 'semantic-ui-react'
 import './App.css'
-import DisplayBalance from './components/displayBalance'
-import MainHeader from './components/header'
-import DisplayBalances from './components/displayBalances'
+import DisplayBalance from './components/displayBalance.tsx'
+import MainHeader from './components/header.tsx'
+import DisplayBalances from './components/displayBalances.tsx'
 import { useNavigate } from 'react-router-dom'
-import EntryLines from './components/entryLines'
-import Message from './components/message'
+import EntryLines from './components/entryLines.tsx'
+import Message from './components/message.tsx'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 
@@ -43,6 +43,24 @@ function App() {
   let subjects: Array<string> = ['English', 'Math']
   let marks: number[] = [50, 50]
 
+  // tuple - several dataTypes
+  let marks2: [string, number] = ['kenya', 50]
+  //  enum
+  // enum Name {school, color='green'}
+  //any
+  let tribe: any = 44
+  //void - declare return type
+  const question = (): string => {
+    return 'vv'
+  }
+
+  interface balanceInitialState {
+    readonly title: string;
+    readonly size: string;
+  }
+
+  const [state] = useState<balanceInitialState>({ title: 'Your Balance:', size: 'small' });
+
   return (
     <Container>
       <h6 className="toast">
@@ -56,8 +74,9 @@ function App() {
         marks; {marks}
       </p>
 
-      <MainHeader title="The Budget Calculater App" />
-      <DisplayBalance title="Your Balance:" value={total} size="small" />
+      <MainHeader title="The Budget Calculator App" />
+      <DisplayBalance title={state.title} value={total} size={state.size} />
+
       <Button onClick={() => navigate('/add')}>Add New</Button>
       <DisplayBalances expenseTotal={0} incomeTotal={0} />
 

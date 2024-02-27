@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react'
 import { Grid, Icon, Segment } from 'semantic-ui-react'
-import * as PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-function EntryLine({ id, description, isExpense = false }) {
+
+const EntryLine = (props: { id: string, description: string, isExpense: boolean }) => {
+  const { isExpense = false } = props
+
   const removeEntryById = useQuery({
     queryKey: ['GET_ENTRIES'],
-    queryFn:     () => {
-      // action to remove
-    }
+    queryFn:     () => {}
   })
 
   return (
@@ -17,13 +17,13 @@ function EntryLine({ id, description, isExpense = false }) {
         <Grid columns={3} textAlign="right">
           <Grid.Row>
             <Grid.Column width={10} textAlign="left">
-              {description}
+              {props.description}
             </Grid.Column>
             <Grid.Column width={3} textAlign="right">
-              {id}
+              {props.id}
             </Grid.Column>
             <Grid.Column width={3}>
-              <Link to={`/${id}`}>
+              <Link to={`/${props.id}`}>
                 <Icon name="edit" bordered />
               </Link>
               <Icon name="trash" bordered onClick={() => removeEntryById()} />
@@ -33,13 +33,6 @@ function EntryLine({ id, description, isExpense = false }) {
       </Segment>
     </Fragment>
   )
-}
-
-EntryLine.propTypes = {
-  id: PropTypes.string,
-  description: PropTypes.string,
-  value: PropTypes.number,
-  isExpense: PropTypes.string,
 }
 
 export default EntryLine

@@ -6,23 +6,32 @@ import './style.css'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useQuery, useMutation, QueryCache } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 
 const validationSchema = yup.object({
   value: yup.number().typeError('Value is equired'),
   description: yup.string().required('Required'),
 })
-function ModalEdit() {
+
+interface formInput {
+  value: number;
+  description: string;
+  id: string;
+}
+
+const ModalEdit = () => {
+
   const navigate = useNavigate()
   const { postId } = useParams()
 
-  const { data } = useQuery({
+  const { data, isSuccess } = useQuery({
     queryKey: ['GET_ENTRY', { postId }],
     queryFn: () => axios.get(`http://localhost:3001/entries/${postId}`),
-    onSuccess: ({ description, value, id }) => {
-      reset({ description, value, id })
-    }
+    // onSuccess: ({ description, value, id }) => {
+    //   reset({ description, value, id })
+    // }
   })
+  
 
   const defaultValues = { ...data?.data }
 
@@ -31,21 +40,17 @@ function ModalEdit() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<formInput>({
     resolver: yupResolver(validationSchema),
   })
 
   const updateEntryRedux = useMutation({
-    mutationFn: (values) =>
+    mutationFn: (values: formInput) =>
       axios.post('/', {
         value: values.value,
         description: values.description,
       }),
-    onSuccess: (data) => {
-      QueryCache.setQueryData(['GET_ENTRY', postId], data) // Not necessary
-      QueryCache.invalidateQueries(['GET_ENTRY', postId]) // Not necessary
-    },
-    onError: (error) => {
+    onError: (error: { response: { data: string } }) => {
       window.alert(error.response.data)
     },
     onSettled: () => navigate('/'),
@@ -58,7 +63,7 @@ function ModalEdit() {
         <div>
           {errors.description && <p>{errors.description?.message}</p>}
           <form
-            onSubmit={handleSubmit((data) => updateEntryRedux.mutate(data))}
+            onSubmit={handleSubmit((data: formInput) => updateEntryRedux.mutate(data))}
           >
             <label htmlFor="fname">Value</label>
             <input
@@ -84,7 +89,7 @@ function ModalEdit() {
       <Modal.Actions>
         <Button onClick={() => navigate('/')}>Close</Button>
         <Button
-          onClick={handleSubmit((data) => updateEntryRedux.mutate(data))}
+          onClick={handleSubmit((data: formInput) => updateEntryRedux.mutate(data))}
           primary
         >
           Update
@@ -93,9 +98,5 @@ function ModalEdit() {
     </Modal>
   )
 }
-
-ModalEdit.defaultProps = {}
-
-ModalEdit.propTypes = {}
 
 export default ModalEdit
